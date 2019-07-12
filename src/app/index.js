@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Modal from '../Modal';
+import Modal from '../package';
 
 class App extends Component {
   render() {
