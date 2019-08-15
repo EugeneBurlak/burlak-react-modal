@@ -12,6 +12,7 @@ export default class Modal extends Component {
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+    this.ignoredProps = false;
   }
   componentDidMount() {
     this.props.opened &&
@@ -32,6 +33,7 @@ export default class Modal extends Component {
     );
   }
   close() {
+    this.ignoredProps = true;
     this.props.beforeHide && this.props.beforeHide();
     this.setState(
       {
@@ -45,6 +47,7 @@ export default class Modal extends Component {
             },
             () => {
               this.props.onHide && this.props.onHide();
+              this.ignoredProps = false;
             }
           );
         }, 600);
@@ -52,6 +55,7 @@ export default class Modal extends Component {
     );
   }
   componentWillReceiveProps(props) {
+    if(this.ignoredProps) return;
     if (props.opened !== this.state.open) {
       props.opened ? this.open() : this.close();
     }
@@ -64,6 +68,7 @@ export default class Modal extends Component {
   render() {
     let { open, contentShow, className, maxWidth } = this.state;
     maxWidth = parseInt(maxWidth);
+    console.log('11');
     return (
       <div
         className={[

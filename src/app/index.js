@@ -3,9 +3,19 @@ import ReactDOM from 'react-dom';
 import Modal from '../package';
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      bool: true
+    }
+  }
   render() {
     return (
-      <Modal opened={true}>
+      <Modal opened={this.state.bool} onHide={() => {
+        this.setState({
+          bool: false
+        })
+      }}>
         ds
       </Modal>
     );
