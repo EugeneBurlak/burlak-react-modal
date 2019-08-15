@@ -68,7 +68,6 @@ export default class Modal extends Component {
   render() {
     let { open, contentShow, className, maxWidth } = this.state;
     maxWidth = parseInt(maxWidth);
-    console.log('11');
     return (
       <div
         className={[
