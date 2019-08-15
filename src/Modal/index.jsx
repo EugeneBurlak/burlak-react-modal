@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import "./styles/styles.scss";
+import React, { Component } from 'react';
+import './styles/styles.scss';
 
 export default class Modal extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ export default class Modal extends Component {
     this.state = {
       open: false,
       contentShow: false,
-      className: props.className || "",
+      className: props.className || '',
       maxWidth: props.maxWidth || 768
     };
     this.close = this.close.bind(this);
@@ -67,16 +67,17 @@ export default class Modal extends Component {
     return (
       <div
         className={[
-          "modal",
-          "modal__" + (open ? "open" : "close"),
+          'modal',
+          'modal__' + (open ? 'open' : 'close'),
+          this.props.dark ? 'modal__dark' : '',
           className
-        ].join(" ")}
+        ].join(' ')}
         onClick={this.close}
       >
         <div
           className="modal-content"
           style={{
-            maxWidth: maxWidth + "px"
+            maxWidth: maxWidth + 'px'
           }}
         >
           <div className="modal-close">
@@ -90,6 +91,9 @@ export default class Modal extends Component {
               e.stopPropagation();
             }}
           >
+            {this.props.title && (
+              <div className="modal-title">{this.props.title}</div>
+            )}
             {contentShow && this.props.children}
           </div>
         </div>
