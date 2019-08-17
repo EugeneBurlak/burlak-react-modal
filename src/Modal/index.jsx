@@ -8,7 +8,9 @@ export default class Modal extends Component {
       open: false,
       contentShow: false,
       className: props.className || '',
-      maxWidth: props.maxWidth || 768
+      maxWidth: props.maxWidth || 768,
+      buttons: props.buttons || false,
+      title: props.title || false
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -21,6 +23,7 @@ export default class Modal extends Component {
       }, 0);
   }
   open() {
+    this.ignoredProps = true;
     clearTimeout(this.timeout);
     this.setState(
       {
@@ -29,6 +32,7 @@ export default class Modal extends Component {
       },
       () => {
         this.props.onShow && this.props.onShow();
+        this.ignoredProps = false;
       }
     );
   }
@@ -55,18 +59,24 @@ export default class Modal extends Component {
     );
   }
   componentWillReceiveProps(props) {
-    if(this.ignoredProps) return;
-    if (props.opened !== this.state.open) {
+    if (this.ignoredProps) return;
+    if (props.opened  && props.opened !== this.state.open) {
       props.opened ? this.open() : this.close();
     }
+    let newState = {};
     if (props.maxWidth !== this.state.maxWidth) {
-      this.setState({
-        maxWidth: props.maxWidth
-      });
+      newState.maxWidth = props.maxWidth;
     }
+    if (props.buttons !== this.state.buttons) {
+      newState.buttons = props.buttons;
+    }
+    if (props.title !== this.state.title) {
+      newState.title = props.title;
+    }
+    this.setState(newState);
   }
   render() {
-    let { open, contentShow, className, maxWidth } = this.state;
+    let { open, contentShow, className, maxWidth, buttons, title } = this.state;
     maxWidth = parseInt(maxWidth);
     return (
       <div
@@ -95,10 +105,31 @@ export default class Modal extends Component {
               e.stopPropagation();
             }}
           >
-            {this.props.title && (
-              <div className="modal-title">{this.props.title}</div>
+            {title && <div className="modal-title">{title}</div>}
+            <div className="modal-children">
+              {contentShow && this.props.children}
+            </div>
+            {buttons && (
+              <div className="modal-buttons">
+                {buttons.map((button, index) => {
+                  return (
+                    <div key={index} className="modal-buttons-col">
+                      <button
+                        className={[
+                          'modal-button',
+                          button.type ? 'modal-button__' + button.type : ''
+                        ].join(' ')}
+                        onClick={() => {
+                          button.onClick && button.onClick();
+                        }}
+                      >
+                        {button.text}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
             )}
-            {contentShow && this.props.children}
           </div>
         </div>
       </div>
