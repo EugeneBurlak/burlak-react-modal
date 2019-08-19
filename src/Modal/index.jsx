@@ -20,7 +20,7 @@ export default class Modal extends Component {
     this.props.opened &&
       setTimeout(() => {
         this.open();
-      }, 0);
+      }, 10);
   }
   open() {
     this.ignoredProps = true;
