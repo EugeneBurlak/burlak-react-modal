@@ -31,14 +31,14 @@ export default class Modal extends Component {
         contentShow: true
       },
       () => {
-        this.props.onShow && this.props.onShow();
+        this.props.onShow && this.props.onShow(this);
         this.ignoredProps = false;
       }
     );
   }
   close() {
     this.ignoredProps = true;
-    this.props.beforeHide && this.props.beforeHide();
+    this.props.beforeHide && this.props.beforeHide(this);
     this.setState(
       {
         open: false
@@ -50,7 +50,7 @@ export default class Modal extends Component {
               contentShow: false
             },
             () => {
-              this.props.onHide && this.props.onHide();
+              this.props.onHide && this.props.onHide(this);
               this.ignoredProps = false;
             }
           );
@@ -119,8 +119,8 @@ export default class Modal extends Component {
                           'modal-button',
                           button.type ? 'modal-button__' + button.type : ''
                         ].join(' ')}
-                        onClick={() => {
-                          button.onClick && button.onClick();
+                        onClick={e => {
+                          button.onClick && button.onClick(e, this);
                         }}
                       >
                         {button.text}
