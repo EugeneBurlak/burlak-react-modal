@@ -86,11 +86,11 @@
         text-align: right;
       }
       &:first-child,
-      &:nth-child(2){
+      &:nth-child(2) {
         padding-top: 0;
       }
       &:last-child,
-      &:nth-last-child(2){
+      &:nth-last-child(2) {
         padding-bottom: 0;
       }
     }
@@ -117,8 +117,8 @@
     &__success {
       background-color: #00c87a;
     }
-    &:hover{
-      transform: scale(0.96)
+    &:hover {
+      transform: scale(0.96);
     }
   }
   &__close {
