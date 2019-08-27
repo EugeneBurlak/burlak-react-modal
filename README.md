@@ -5,7 +5,7 @@ npm i --save burlak-react-modal
 ```
 
 ```
-import Form from 'burlak-react-modal';
+import Modal from 'burlak-react-modal';
 <Modal
 	dark
 	title={'Hi!'}
