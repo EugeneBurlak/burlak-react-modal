@@ -59,6 +59,7 @@
       overflow-x: hidden;
       box-shadow: 0 30px 69px -5px rgba(0, 0, 0, 0.3);
       background-color: #fff;
+      position: relative;
     }
   }
   &-title {
@@ -150,6 +151,46 @@
       &-content {
         &-inner {
           background-color: #30343f;
+        }
+      }
+    }
+  }
+  &__dark-2 {
+    color: #fff;
+    .modal {
+      &-close {
+        background-color: transparent;
+        width: 18px;
+        height: 18px;
+        top: 8px;
+        right: 5px;
+        svg {
+          fill: #fff;
+        }
+      }
+      &-title {
+        font-size: 14px;
+        margin-bottom: 10px;
+        padding-right: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      &-content {
+        &-inner {
+          padding: 10px;
+          background-color: #1c212d;
+        }
+      }
+    }
+  }
+  &__centered {
+    .modal {
+      &-content {
+        &-inner {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
     }

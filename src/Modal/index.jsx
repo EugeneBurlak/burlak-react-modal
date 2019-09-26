@@ -83,7 +83,8 @@ export default class Modal extends Component {
         className={[
           'modal',
           'modal__' + (open ? 'open' : 'close'),
-          this.props.dark ? 'modal__dark' : '',
+          this.props.theme ? 'modal__' + this.props.theme : '',
+          this.props.centered ? 'modal__centered' : '',
           className
         ].join(' ')}
         onClick={this.close}
@@ -94,17 +95,17 @@ export default class Modal extends Component {
             maxWidth: maxWidth + 'px'
           }}
         >
-          <div className="modal-close">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M12 10.6L6.6 5.2 5.2 6.6l5.4 5.4-5.4 5.4 1.4 1.4 5.4-5.4 5.4 5.4 1.4-1.4-5.4-5.4 5.4-5.4-1.4-1.4-5.4 5.4z" />
-            </svg>
-          </div>
           <div
             className="modal-content-inner"
             onClick={e => {
               e.stopPropagation();
             }}
           >
+            <div className="modal-close" onClick={this.close}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 10.6L6.6 5.2 5.2 6.6l5.4 5.4-5.4 5.4 1.4 1.4 5.4-5.4 5.4 5.4 1.4-1.4-5.4-5.4 5.4-5.4-1.4-1.4-5.4 5.4z" />
+              </svg>
+            </div>
             {title && <div className="modal-title">{title}</div>}
             <div className="modal-children">
               {contentShow && this.props.children}
