@@ -113,7 +113,7 @@ export default class Modal extends Component {
             {buttons && (
               <div className="modal-buttons">
                 {buttons.map((button, index) => {
-                  return (
+                  return !button || button.hidden ? null : (
                     <div key={index} className="modal-buttons-col">
                       <button
                         className={[
