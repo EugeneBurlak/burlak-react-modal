@@ -10,7 +10,9 @@ export default class Modal extends Component {
       className: props.className || '',
       maxWidth: props.maxWidth || 768,
       buttons: props.buttons || false,
-      title: props.title || false
+      title: props.title || false,
+      theme: props.theme || '',
+      dark: props.dark || false
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -23,6 +25,7 @@ export default class Modal extends Component {
       }, 10);
   }
   open() {
+    this.props.beforeShow && this.props.beforeShow(this);
     this.ignoredProps = true;
     clearTimeout(this.timeout);
     this.setState(
@@ -73,18 +76,26 @@ export default class Modal extends Component {
     if (props.title !== this.state.title) {
       newState.title = props.title;
     }
+    if (props.theme !== this.state.theme) {
+      newState.theme = props.theme;
+    }
+    if (props.dark !== this.state.dark) {
+      newState.dark = props.dark;
+    }
     this.setState(newState);
   }
   render() {
-    let { open, contentShow, className, maxWidth, buttons, title } = this.state;
+    let { open, contentShow, className, maxWidth, buttons, title, theme, dark } = this.state;
     maxWidth = parseInt(maxWidth);
     return (
       <div
         className={[
           'modal',
           'modal__' + (open ? 'open' : 'close'),
-          this.props.theme ? 'modal__' + this.props.theme : '',
+          dark ? 'modal__dark' : '',
+          theme ? 'modal__' + theme : '',
           this.props.centered ? 'modal__centered' : '',
+          !title ? 'modal__no-title' : '',
           className
         ].join(' ')}
         onClick={this.close}
@@ -101,12 +112,14 @@ export default class Modal extends Component {
               e.stopPropagation();
             }}
           >
-            <div className="modal-close" onClick={this.close}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 10.6L6.6 5.2 5.2 6.6l5.4 5.4-5.4 5.4 1.4 1.4 5.4-5.4 5.4 5.4 1.4-1.4-5.4-5.4 5.4-5.4-1.4-1.4-5.4 5.4z" />
-              </svg>
+            <div className="modal-header">
+              <div className="modal-title">{title}</div>
+              <button className="modal-close" onClick={this.close}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12 10.6L6.6 5.2 5.2 6.6l5.4 5.4-5.4 5.4 1.4 1.4 5.4-5.4 5.4 5.4 1.4-1.4-5.4-5.4 5.4-5.4-1.4-1.4-5.4 5.4z" />
+                </svg>
+              </button>
             </div>
-            {title && <div className="modal-title">{title}</div>}
             <div className="modal-children">
               {contentShow && this.props.children}
             </div>

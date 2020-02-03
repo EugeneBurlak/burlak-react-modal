@@ -7,11 +7,14 @@ npm i --save burlak-react-modal
 ```
 import Modal from 'burlak-react-modal';
 <Modal
-	dark
-	title={'Hi!'}
 	className={'my-modal'}
+	theme="some-unique-id-for-customize"
+	dark
+	centered
+	title={'Hi!'}
 	opened={this.state.bool}
 	maxWidth={400}
+	beforeSHow={(instance) => {}}
 	beforeHide={(instance) => {}}
 	onShow={(instance) => {}}
 	onHide={(instance) => {
@@ -31,6 +34,9 @@ import Modal from 'burlak-react-modal';
 		onClick: (e, instance) => {
 			console.log(e, instance);
 		}
+	},{
+		text: 'One more button',
+		hidden: true
 	}]}
 >
 	Test modal

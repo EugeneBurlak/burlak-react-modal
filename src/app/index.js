@@ -6,9 +6,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      title: 'Title '+ +new Date(),
+      title: 'Title ' + +new Date(),
       time: +new Date()
-    }
+    };
   }
   render() {
     return (
@@ -21,19 +21,25 @@ class App extends Component {
           >
             open1
           </button>
-          <Modal ref="modal1" dark title={this.state.title} maxWidth={400}
+          <Modal
+            ref="modal1"
+            dark
+            centered
+            title={this.state.title}
+            maxWidth={400}
             buttons={[
               {
                 text: 'Send',
                 type: 'success',
                 onClick: () => {
-                  alert('send')
+                  alert('send');
                 }
-              },{
+              },
+              {
                 text: 'Cancel',
                 type: 'error',
                 onClick: () => {
-                  alert('cancel')
+                  alert('cancel');
                 }
               }
             ]}
@@ -50,7 +56,7 @@ class App extends Component {
           >
             open2
           </button>
-          <Modal ref="modal2" dark maxWidth={400}>
+          <Modal ref="modal2" maxWidth={400}>
             2
           </Modal>
         </div>

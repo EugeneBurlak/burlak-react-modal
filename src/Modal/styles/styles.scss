@@ -20,12 +20,19 @@
   &-close {
     position: absolute;
     cursor: pointer;
-    right: 0;
-    top: 0;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 32px;
     height: 32px;
     z-index: 3;
     transition: all 0.3s;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    &:focus{
+      outline: none;
+    }
     svg {
       fill: #000;
       width: 100%;
@@ -39,7 +46,7 @@
     }
     &:active {
       svg {
-        transform: rotate(90deg) scale(1.1);
+        transform: rotate(90deg) scale(0.9);
       }
     }
   }
@@ -52,7 +59,6 @@
     text-align: left;
     transition: all 0.6s;
     &-inner {
-      padding: 30px;
       overflow: auto;
       max-height: 100%;
       width: 100%;
@@ -60,27 +66,34 @@
       box-shadow: 0 30px 69px -5px rgba(0, 0, 0, 0.3);
       background-color: #fff;
       position: relative;
+      border-radius: 3px;
     }
+  }
+  &-header{
+    padding: 15px 20px;
+    padding-right: 50px;
+    position: relative;
+    border-bottom: 1px solid #000;
   }
   &-title {
     font-size: 20px;
     line-height: 1em;
-    margin-bottom: 20px;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &-children {
+    padding: 20px;
   }
   &-buttons {
     font-size: 0;
     display: flex;
-    margin: 0 -10px;
+    margin: 0 -5px;
     &:not(:empty) {
-      margin-top: 20px;
+      padding: 0 20px 20px 20px;
     }
     &-col {
-      display: inline-block;
-      width: 50%;
-      padding: 10px;
+      padding: 5px;
       flex: 1;
       &:first-child,
       &:nth-child(2) {
@@ -94,7 +107,7 @@
   }
   &-button {
     display: inline-block;
-    background-color: gray;
+    background-color: #6f7dab;
     color: #fff;
     border-radius: 5px;
     font-size: 12px;
@@ -133,13 +146,12 @@
       }
     }
   }
-  &__open {
-    .modal {
-    }
-  }
-  &__dark {
+  &__dark{
     color: #fff;
     .modal {
+      &-header{
+        border-bottom: 1px solid #6f7dab;
+      }
       &-close {
         background-color: transparent;
         svg {
@@ -148,36 +160,7 @@
       }
       &-content {
         &-inner {
-          background-color: #30343f;
-        }
-      }
-    }
-  }
-  &__dark-2 {
-    color: #fff;
-    .modal {
-      &-close {
-        background-color: transparent;
-        width: 18px;
-        height: 18px;
-        top: 8px;
-        right: 5px;
-        svg {
-          fill: #fff;
-        }
-      }
-      &-title {
-        font-size: 14px;
-        margin-bottom: 10px;
-        padding-right: 20px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      &-content {
-        &-inner {
-          padding: 10px;
-          background-color: #1c212d;
+          background-color: #384368;
         }
       }
     }
@@ -190,6 +173,19 @@
           top: 50%;
           transform: translateY(-50%);
         }
+      }
+    }
+  }
+  &__no-title{
+    .modal{
+      &-header{
+        border: none;
+        padding: 0;
+      }
+      &-close{
+        top: 10px;
+        right: 10px;
+        transform: translateY(0);
       }
     }
   }
