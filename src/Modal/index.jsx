@@ -62,7 +62,7 @@ export default class Modal extends Component {
     );
   }
   componentWillReceiveProps(props) {
-    let state = {...this.state};
+    let state = { ...this.state };
     if (this.ignoredProps) return;
     if (props.hasOwnProperty('opened') && props.opened !== state.open) {
       props.opened ? this.open() : this.close();
