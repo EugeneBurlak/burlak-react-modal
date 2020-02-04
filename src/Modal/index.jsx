@@ -62,30 +62,40 @@ export default class Modal extends Component {
     );
   }
   componentWillReceiveProps(props) {
+    let state = {...this.state};
     if (this.ignoredProps) return;
-    if (props.hasOwnProperty('opened') && props.opened !== this.state.open) {
+    if (props.hasOwnProperty('opened') && props.opened !== state.open) {
       props.opened ? this.open() : this.close();
     }
     let newState = {};
-    if (props.maxWidth !== this.state.maxWidth) {
+    if (props.maxWidth !== state.maxWidth) {
       newState.maxWidth = props.maxWidth;
     }
-    if (props.buttons !== this.state.buttons) {
+    if (props.buttons !== state.buttons) {
       newState.buttons = props.buttons;
     }
-    if (props.title !== this.state.title) {
+    if (props.title !== state.title) {
       newState.title = props.title;
     }
-    if (props.theme !== this.state.theme) {
+    if (props.theme !== state.theme) {
       newState.theme = props.theme;
     }
-    if (props.dark !== this.state.dark) {
+    if (props.dark !== state.dark) {
       newState.dark = props.dark;
     }
-    this.setState(newState);
+    if (Object.keys(newState).length) this.setState(newState);
   }
   render() {
-    let { open, contentShow, className, maxWidth, buttons, title, theme, dark } = this.state;
+    let {
+      open,
+      contentShow,
+      className,
+      maxWidth,
+      buttons,
+      title,
+      theme,
+      dark
+    } = this.state;
     maxWidth = parseInt(maxWidth);
     return (
       <div

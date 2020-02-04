@@ -11,12 +11,15 @@ class App extends Component {
     };
   }
   render() {
+    console.log(this.state.bool);
     return (
       <div className="wrap">
         <div className="wrap-inner-1">
           <button
             onClick={() => {
-              this.refs.modal1.open();
+              this.setState({
+                bool: true
+              });
             }}
           >
             open1
@@ -27,6 +30,12 @@ class App extends Component {
             centered
             title={this.state.title}
             maxWidth={400}
+            opened={this.state.bool}
+            onHide={() => {
+              this.setState({
+                bool: false
+              });
+            }}
             buttons={[
               {
                 text: 'Send',
@@ -56,9 +65,6 @@ class App extends Component {
           >
             open2
           </button>
-          <Modal ref="modal2" maxWidth={400}>
-            2
-          </Modal>
         </div>
       </div>
     );
