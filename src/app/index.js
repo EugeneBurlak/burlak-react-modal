@@ -7,11 +7,16 @@ class App extends Component {
     super();
     this.state = {
       title: 'Title ' + +new Date(),
-      time: +new Date()
+      time: +new Date(),
+      bool: true
     };
   }
+  componentDidMount(){
+    setInterval(() => {
+      this.forceUpdate();
+    }, 100)
+  }
   render() {
-    console.log(this.state.bool);
     return (
       <div className="wrap">
         <div className="wrap-inner-1">
@@ -25,7 +30,6 @@ class App extends Component {
             open1
           </button>
           <Modal
-            ref="modal1"
             dark
             centered
             title={this.state.title}
@@ -38,7 +42,7 @@ class App extends Component {
             }}
             buttons={[
               {
-                text: 'Send',
+                text: 'Send '+Math.random().toFixed(2),
                 type: 'success',
                 onClick: () => {
                   alert('send');
@@ -53,18 +57,8 @@ class App extends Component {
               }
             ]}
           >
-            32
+            {Math.random()}
           </Modal>
-          <span>23131</span>
-        </div>
-        <div className="wrap-inner-2">
-          <button
-            onClick={() => {
-              this.refs.modal2.open();
-            }}
-          >
-            open2
-          </button>
         </div>
       </div>
     );

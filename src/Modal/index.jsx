@@ -6,68 +6,64 @@ export default class Modal extends Component {
     super(props);
     this.state = {
       open: false,
+      opened: props.opened || false,
       contentShow: false,
       className: props.className || '',
       maxWidth: props.maxWidth || 768,
       buttons: props.buttons || false,
       title: props.title || false,
       theme: props.theme || '',
-      dark: props.dark || false
+      dark: props.dark || false,
+      ignoredProps: false
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
-    this.ignoredProps = false;
   }
   componentDidMount() {
-    this.props.opened &&
-      setTimeout(() => {
-        this.open();
-      }, 10);
+    this.state.opened && setTimeout(this.open, 0);
   }
   open() {
     this.props.beforeShow && this.props.beforeShow(this);
-    this.ignoredProps = true;
     clearTimeout(this.timeout);
     this.setState(
       {
         open: true,
-        contentShow: true
+        contentShow: true,
+        ignoredProps: false
       },
       () => {
         this.props.onShow && this.props.onShow(this);
-        this.ignoredProps = false;
       }
     );
   }
   close() {
-    this.ignoredProps = true;
     this.props.beforeHide && this.props.beforeHide(this);
     this.setState(
       {
-        open: false
+        open: false,
+        ignoredProps: true
       },
       () => {
         this.timeout = setTimeout(() => {
           this.setState(
             {
-              contentShow: false
+              contentShow: false,
+              ignoredProps: false
             },
             () => {
               this.props.onHide && this.props.onHide(this);
-              this.ignoredProps = false;
             }
           );
         }, 600);
       }
     );
   }
-  componentWillReceiveProps(props) {
-    let state = { ...this.state };
-    if (this.ignoredProps) return;
-    if (props.hasOwnProperty('opened') && props.opened !== state.open) {
-      props.opened ? this.open() : this.close();
-    }
+  static getDerivedStateFromProps(props, state) {
+    if (state.ignoredProps) return null;
     let newState = {};
+    if (props.opened !== state.opened) {
+      newState.opened = props.opened;
+    }
     if (props.maxWidth !== state.maxWidth) {
       newState.maxWidth = props.maxWidth;
     }
@@ -83,9 +79,20 @@ export default class Modal extends Component {
     if (props.dark !== state.dark) {
       newState.dark = props.dark;
     }
-    if (Object.keys(newState).length) this.setState(newState);
+    return Object.keys(newState).length ? newState : null;
   }
+
+  beforeRender() {
+    setTimeout(() => {
+      let { open, opened, ignoredProps } = this.state;
+      if (!ignoredProps && open !== opened) {
+        opened ? this.open() : this.close();
+      }
+    }, 0);
+  }
+
   render() {
+    this.beforeRender();
     let {
       open,
       contentShow,
