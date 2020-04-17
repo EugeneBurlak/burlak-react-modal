@@ -36,6 +36,11 @@ import Modal from 'burlak-react-modal';
 		}
 	},{
 		text: 'One more button',
+		tag: 'a',
+		attributes: {
+			href: '#',
+			target: '_blank'
+		},
 		hidden: true
 	}]}
 >

@@ -143,9 +143,10 @@ export default class Modal extends Component {
             {buttons && (
               <div className="modal-buttons">
                 {buttons.map((button, index) => {
+                  if(button) button.tag = button.tag || 'button';
                   return !button || button.hidden ? null : (
                     <div key={index} className="modal-buttons-col">
-                      <button
+                      <button.tag
                         className={[
                           'modal-button',
                           button.type ? 'modal-button__' + button.type : ''
@@ -153,9 +154,10 @@ export default class Modal extends Component {
                         onClick={e => {
                           button.onClick && button.onClick(e, this);
                         }}
+                        {...button.attributes || {}}
                       >
                         {button.text}
-                      </button>
+                      </button.tag>
                     </div>
                   );
                 })}
