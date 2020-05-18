@@ -30,7 +30,6 @@ class App extends Component {
             open1
           </button>
           <Modal
-            dark
             centered
             title={this.state.title}
             maxWidth={400}
