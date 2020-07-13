@@ -14,7 +14,8 @@ export default class Modal extends Component {
       title: props.title || false,
       theme: props.theme || '',
       dark: props.dark || false,
-      ignoredProps: false
+      disabledClose: props.disabledClose || false,
+      ignoredProps: false,
     };
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
@@ -29,7 +30,7 @@ export default class Modal extends Component {
       {
         open: true,
         contentShow: true,
-        ignoredProps: false
+        ignoredProps: false,
       },
       () => {
         this.props.onShow && this.props.onShow(this);
@@ -41,14 +42,14 @@ export default class Modal extends Component {
     this.setState(
       {
         open: false,
-        ignoredProps: true
+        ignoredProps: true,
       },
       () => {
         this.timeout = setTimeout(() => {
           this.setState(
             {
               contentShow: false,
-              ignoredProps: false
+              ignoredProps: false,
             },
             () => {
               this.props.onHide && this.props.onHide(this);
@@ -79,6 +80,9 @@ export default class Modal extends Component {
     if (props.dark !== state.dark) {
       newState.dark = props.dark;
     }
+    if (props.disabledClose !== state.disabledClose) {
+      newState.disabledClose = props.disabledClose;
+    }
     return Object.keys(newState).length ? newState : null;
   }
 
@@ -101,7 +105,8 @@ export default class Modal extends Component {
       buttons,
       title,
       theme,
-      dark
+      dark,
+      disabledClose,
     } = this.state;
     maxWidth = parseInt(maxWidth);
     return (
@@ -113,29 +118,31 @@ export default class Modal extends Component {
           theme ? 'modal__' + theme : '',
           this.props.centered ? 'modal__centered' : '',
           !title ? 'modal__no-title' : '',
-          className
+          className,
         ].join(' ')}
-        onClick={this.close}
+        onClick={!disabledClose && this.close}
       >
         <div
           className="modal-content"
           style={{
-            maxWidth: maxWidth + 'px'
+            maxWidth: maxWidth + 'px',
           }}
         >
           <div
             className="modal-content-inner"
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
             }}
           >
             <div className="modal-header">
               <div className="modal-title">{title}</div>
-              <button className="modal-close" onClick={this.close}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M12 10.6L6.6 5.2 5.2 6.6l5.4 5.4-5.4 5.4 1.4 1.4 5.4-5.4 5.4 5.4 1.4-1.4-5.4-5.4 5.4-5.4-1.4-1.4-5.4 5.4z" />
-                </svg>
-              </button>
+              {!disabledClose && (
+                <button className="modal-close" onClick={this.close}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 10.6L6.6 5.2 5.2 6.6l5.4 5.4-5.4 5.4 1.4 1.4 5.4-5.4 5.4 5.4 1.4-1.4-5.4-5.4 5.4-5.4-1.4-1.4-5.4 5.4z" />
+                  </svg>
+                </button>
+              )}
             </div>
             <div className="modal-children">
               {contentShow && this.props.children}
@@ -143,18 +150,18 @@ export default class Modal extends Component {
             {buttons && (
               <div className="modal-buttons">
                 {buttons.map((button, index) => {
-                  if(button) button.tag = button.tag || 'button';
+                  if (button) button.tag = button.tag || 'button';
                   return !button || button.hidden ? null : (
                     <div key={index} className="modal-buttons-col">
                       <button.tag
                         className={[
                           'modal-button',
-                          button.type ? 'modal-button__' + button.type : ''
+                          button.type ? 'modal-button__' + button.type : '',
                         ].join(' ')}
-                        onClick={e => {
+                        onClick={(e) => {
                           button.onClick && button.onClick(e, this);
                         }}
-                        {...button.attributes || {}}
+                        {...(button.attributes || {})}
                       >
                         {button.text}
                       </button.tag>
