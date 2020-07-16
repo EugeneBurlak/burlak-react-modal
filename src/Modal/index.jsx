@@ -158,6 +158,7 @@ export default class Modal extends Component {
                           'modal-button',
                           button.type ? 'modal-button__' + button.type : '',
                         ].join(' ')}
+                        disabled={button.disabled || false}
                         onClick={(e) => {
                           button.onClick && button.onClick(e, this);
                         }}
