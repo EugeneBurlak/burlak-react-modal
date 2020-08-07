@@ -23,8 +23,12 @@ export default class Modal extends Component {
   componentDidMount() {
     this.state.opened && setTimeout(this.open, 0);
   }
-  open() {
+  open({
+    before = false,
+    after = false
+  } = {}) {
     this.props.beforeShow && this.props.beforeShow(this);
+    before && before();
     clearTimeout(this.timeout);
     this.setState(
       {
@@ -34,11 +38,16 @@ export default class Modal extends Component {
       },
       () => {
         this.props.onShow && this.props.onShow(this);
+        after && after();
       }
     );
   }
-  close() {
+  close({
+    before = false,
+    after = false
+  } = {}) {
     this.props.beforeHide && this.props.beforeHide(this);
+    before && before();
     this.setState(
       {
         open: false,
@@ -53,6 +62,7 @@ export default class Modal extends Component {
             },
             () => {
               this.props.onHide && this.props.onHide(this);
+              after && after();
             }
           );
         }, 600);
